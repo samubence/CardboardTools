@@ -35,8 +35,8 @@ public class CardboardEventAnimate : MonoBehaviour, CardboardEventListener {
 		Animator animator = objectToAnimate.GetComponent<Animator> ();
 
 		if (animator != null) 
-		{
-			animator.CrossFade (nameOfAnimation, 0);
+		{			
+			animator.CrossFade (nameOfAnimation, 0);		
 		}
 
 		if (destroyAfterCollision == true) 

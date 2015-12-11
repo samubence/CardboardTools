@@ -118,25 +118,32 @@ public class CardboardTriggerOnGaze : MonoBehaviour
 			
 			Mesh mesh = new Mesh ();
 
-			int n = 100;
-			float r = 0.05f;
+			int res = 100;
+			float r1 = 0.04f;
+			float r2 = 0.05f;
+			float step = Mathf.PI * 2 / (float)res;
+			int n = (int)(res * pct);
 
-			float step = Mathf.PI * 2 / (float)n;
-			Vector3[] newVertices = new Vector3[n * 3];
-			int[] newTriangles = new int[n * 3];
+			Vector3[] newVertices = new Vector3[n * 2];
+			int[] newTriangles = new int[n * 3 * 2];
 
-			for (int i = 0; i < n * pct; i++) {
-				int index = i * 3;
+			for (int i = 0; i < n; i++) 
+			{
+				int index = i * 2;
 				float a = -i * step + Mathf.PI / 2f;
-				float aa = -i * step + step + Mathf.PI / 2f;
+				newVertices [index + 0] = new Vector3 (Mathf.Cos (a) * r1, Mathf.Sin (a) * r1, 0f);
+				newVertices [index + 1] = new Vector3 (Mathf.Cos (a) * r2, Mathf.Sin (a) * r2, 0f);
+			}
+			for (int i = 0; i < n - 1; i++) 
+			{
+				int index = i * 3 * 2;
+				newTriangles [index + 0] = i * 2 + 0;
+				newTriangles [index + 1] = i * 2 + 1;
+				newTriangles [index + 2] = (i + 1) * 2 + 0;
 
-				newVertices [index + 0] = new Vector3 (0f, 0f, 0f);
-				newVertices [index + 1] = new Vector3 (Mathf.Cos (aa) * r, Mathf.Sin (aa) * r, 0f);
-				newVertices [index + 2] = new Vector3 (Mathf.Cos (a) * r, Mathf.Sin (a) * r, 0f);
-
-				newTriangles [index + 0] = index + 0;
-				newTriangles [index + 1] = index + 1;
-				newTriangles [index + 2] = index + 2;
+				newTriangles [index + 3] = (i + 1) * 2 + 0;
+				newTriangles [index + 4] = i * 2 + 1;
+				newTriangles [index + 5] = (i + 1) * 2 + 1;
 			}
 
 			mesh.vertices = newVertices;
