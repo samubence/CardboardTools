@@ -3,8 +3,9 @@ using System.Collections;
 
 public class CardboardTriggerOnGaze : MonoBehaviour 
 {
-	public float lookAtInterval;
+	public float lookAtInterval = 1;
 	public Material timerMaterial;
+	public bool displayTimer = true;
 
 	CardboardHead head;
 	GameObject lookAtObject;
@@ -74,7 +75,7 @@ public class CardboardTriggerOnGaze : MonoBehaviour
 		{
 			float d = (Time.time - lookAtStarted) / lookAtInterval;
 
-			updateTimer (d);
+			if (displayTimer) updateTimer (d);
 
 			if (d >= 1) {
 				lookAtStarted = -1;
@@ -86,7 +87,8 @@ public class CardboardTriggerOnGaze : MonoBehaviour
 		}
 		else 
 		{
-			timerObject.SetActive (false);
+			if (displayTimer)
+				updateTimer (0);
 		}
 	}
 
